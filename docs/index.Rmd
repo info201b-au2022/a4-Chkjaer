@@ -1,6 +1,6 @@
 ---
-title: "Your A4 Report Title (TODO: Revise title)"
-author: "Your Name"
+title: "The Growth of Prison and Jail populations and the Disproportionate Incarceration of Blacks in the U.S."
+author: "Christian Kjaer"
 date: '2022-11-01'
 output: html_document
 ---
@@ -11,35 +11,55 @@ source("../source/analysis.R")
 ```
 
 ## Abstract 
-[TODO: Include a short abstract (about 50 words)]
+This report examines prison population data to analyze the growth of the prison and jailing system in America. It points out the grotesque growth the prison-industrial complex has seen using data from 1975-2018. However the focus and reasoning for this analysis is to acknowledge the over-imprisonment of Black individuals specifically, and determine where this disproportionate incarceration is happening.
 
-# Test (TODO: Remove before submission!!)
-```{r echo=FALSE}
-q1_string <- test_query1()
-num <- 5
-```
-As you know, this is a markdown report. The [R Markdown Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf) is **useful!**
-
-* Here's a test of a dynamic variable. Say **"`r q1_string`!!!** 
-* Here's another test. A vector
-of numbers: `r test_query2(num)`.
-
-Recall that _{r echo=TRUE}_ can be used to display the code, 
-which is very useful when developing and debugging a report. Here's an example: 
-
-```{r echo=TRUE}
-num <- 5
-sum <- sum(test_query2(num))
-print(sum)
-```
 
 ## Introduction 
-[TODO]
+Data on the U.S. Prison System is incredibly important in recognizing flaws and calling for accountability in our nation's justice system. Just like the neutrality assumption with computers, I am sure many feel that _the Law_ is a neutral and fair way to provide justice and safety to everyone, regardless of identity. However, as the data below will demonstrate, _the Law_ isn't really _neutral or fair_ at all. In fact, it's effect on an individual varies quite dramatically depending on their identity. For many, the justice system doesn't really provide justice or safety for them at all; For many, this system actually poses great danger. For instance, this form of justice disproportionately targets people of color. Without this valuable data collection, we would not be able to recognize these patterns of inequality, and therefore wouldn't be able to change them. Throughout this report, I hope to demonstrate this inequality's effect specifically on the Black population, despite other identities also being unfairly impacted. Anyone who actually values justice and safety should take great care when considering their satisfaction with the prison-industrial complex's effect on our country. Through further research, it becomes clear the system is more about seemingly unending growth and deeply embedded racism, than it is about "Justice" or "Safety".
 
 ## Data Summary 
-[TODO]
+`r year_highest_black_prison_admissions %>% pull(year)` was the year where the average percent of Black prison admits was the highest. Across the entire country, on average, `r year_highest_black_prison_admissions %>% pull(avg_percent_black_prison_admissions)`% of prison admits were Black. When looking at this, it is clear there is an over-imprisoning of Black people. But that was in 1975? Surely things have changed... When looking at 2016, although the national average has come down, we still see numbers like the ones that contributed to 1975's high average. For example, `r location_highest_percent_prison_pop_black %>% pull(Location)` has a prison population that is `r location_highest_percent_prison_pop_black %>% pull(percent_prison_pop_black)`% Black. Unfortunately the U.S. prison system continues to disproportionately affect people of color. It is interesting to notice this county is in the South, as there are important historical relationships to consider between the South and freedom for Black people in this country.
+In fact, after using this code:
+```{r echo=TRUE, eval=FALSE, message=FALSE}
+highest_black_prison_populations <- incarceration_trends_1 %>% 
+  group_by(year) %>%
+  arrange(year) %>%
+  select('Location', percent_prison_pop_black, region) %>%
+  top_n(10, percent_prison_pop_black)
+```
+to see where the 10 highest percent Black prison populations each year from 1975-2018 were, it becomes clear there is a geographic factor to Black imprisonment, even today. **_Every single one_** of the 10 highest Black Prison Populations, for **every year** in the data set, is in the South.
 
-[TODO ... other sections ... See Canvas for details]
+```{r echo=FALSE, eval=TRUE}
+print(highest_black_prison_populations$region)
+```
+ 
+## Overall Jail Population Increase
+```{r echo=FALSE, eval=TRUE}
+plot_jail_pop_for_us()
+```
 
-_All the very best with your work!_
+From the 1980s up through the 2000s, the jailing system's growth is severe. Fortunately we have started to see a plateauing of the population since the late 2000s, but it is unfortunate the numbers have leveled off at such a dramatically large amount. This is no indication the population will start decline soon; Perhaps we've simply reached our "carrying capacity".
+
+## Jail Population Increase by States
+```{r echo=FALSE, eval=TRUE, message=FALSE}
+plot_jail_pop_by_states(c("AL", "TX", "CA", "WA", "NY"))
+```
+
+It makes sense that larger states would have larger jail populations. I just find it interesting to note here that states of all political ideologies contribute to the increase. I chose these states as I wanted to see how different sizes and ideologies would relate to jail population growth. It's clear that size, not ideology, matters. It doesn't matter if you're "blue" like California or "red" like Texas; larger states play a huge role in the increase.
+
+# Black vs. White Population Increase in U.S. Prisons
+```{r echo=FALSE, eval=TRUE, message=FALSE}
+plot_black_white_year_prison_pop()
+```
+
+# Does the increase of the prison system's size result in a more accurate and fair proportion of incarcerated Blacks to Whites?
+No. The gap between the White and Black prison populations throughout the population's increase did not see significant decreases until after 2010, which is subsequently when the entire prison population finally began to decline slightly. Additionally,it should be noticed that until the late 1990s, the gap only appears ot be growing.
+For the first time since 1985, the Black prison population finally (and just barely) dips below the White prison population in 2016.
+
+# Where are Black people being disproportionatly jailed the most today?
+```{r echo=FALSE, eval=TRUE}
+U.S.
+```
+
+It is clear that racial bias in the South still holds strong today, as these states still hold high percentages of Black prisoners. It's horrifying to see in some of these states a large **majority** of their prisoners are Black individuals. The history of struggle for Blacks in the South continues as many argue slavery never ended, just taken on new forms. It's easy to see why when looking at the such a disproportionate imprisonment of people. Imprisonment is a modern route for slavery to exist. 
 
