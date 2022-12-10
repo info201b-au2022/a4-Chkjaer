@@ -166,9 +166,16 @@ states_incarceration <- incarceration_trends_1 %>% rename(state_abb = state) %>%
     state_black_incarceration = mean(percent_prison_pop_black, na.rm = TRUE)
   ) %>% left_join(state_abbs, by = "state_abb")
 
-state_shape <- map_data("state") %>% rename(state = region) %>% left_join(states_incarceration, by ="state")
+wrangle_state_shape <- function() {
+  state_shape <- map_data("state") %>% 
+    rename(state = region) %>% 
+    left_join(states_incarceration, by ="state")
+  return(state_shape)
+}
 
-U.S. <- ggplot(state_shape) +
+plotU.S. <- function() {
+  state_shape <- wrangle_state_shape()
+  ggplot(state_shape) +
   geom_polygon(
     mapping = aes(x = long, y = lat, group = group, fill = state_black_incarceration),
     color = "Black",
@@ -189,6 +196,7 @@ U.S. <- ggplot(state_shape) +
     panel.grid.minor = element_blank(),
     panel.border = element_blank(),
   )
+}
 
 ## Load data frame ---- 
 

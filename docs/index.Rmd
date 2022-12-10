@@ -58,7 +58,7 @@ For the first time since 1985, the Black prison population finally (and just bar
 
 # Where are Black people being disproportionatly jailed the most today?
 ```{r echo=FALSE, eval=TRUE}
-U.S.
+plotU.S.()
 ```
 
 It is clear that racial bias in the South still holds strong today, as these states still hold high percentages of Black prisoners. It's horrifying to see in some of these states a large **majority** of their prisoners are Black individuals. The history of struggle for Blacks in the South continues as many argue slavery never ended, just taken on new forms. It's easy to see why when looking at the such a disproportionate imprisonment of people. Imprisonment is a modern route for slavery to exist. 
